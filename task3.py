@@ -13,11 +13,12 @@ def get_indices(N, n_batches, split_ratio):
     Returns:
         generator for batch indices [i, j, k]
     """
-    inds = np.array([0, 0, 0])
+    num = 1//split_ratio
+    slice = N // (n_batches + num)
+    inds = np.array([0, num * slice, (num + 1) * slice])
     for i in range(n_batches):
-        # todo: move forward batch
-        # calculate new indices
         yield inds
+        inds += slice
 
 def main():
     for inds in get_indices(100, 5, 0.25):
